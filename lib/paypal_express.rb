@@ -9,7 +9,8 @@ module PaypalExpress
     setup_response = express_gateway.setup_purchase(@order.total*100,
         :ip                => request.remote_ip,
         :return_url        => url_for(:action => 'confirm', :id => @order, :only_path => false),
-        :cancel_return_url => url_for(:action => 'edit', :id => @order, :only_path => false)
+        :cancel_return_url => url_for(:action => 'edit', :id => @order, :only_path => false),
+        :order_id          => @order.number
       )
       redirect_to express_gateway.redirect_url_for(setup_response.token)
   end
