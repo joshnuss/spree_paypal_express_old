@@ -24,9 +24,9 @@ module PaypalExpress
     @address = details_response.address
     @user = current_user ||= User.create(:email => details_response.email)
     @ship_address = Address.new
-    begin
+    if @address['name'].include?(' ')
       @ship_address.firstname, @ship_address.lastname = @address['name'].split(' ')
-    rescue
+    else
       @ship_address.firstname = @address['name']
       @ship_address.lastname = @address['name']
     end
